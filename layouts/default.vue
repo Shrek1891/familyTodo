@@ -12,7 +12,9 @@ const router = useRouter();
 onMounted(async () => {
   try {
     const user = await account.get();
+    console.log(user);
     if (user) store.set(user);
+    console.log(store.isAuth);
     isLoadingStorage.set(false);
   } catch (error) {
     await router.push('/logout');
@@ -29,15 +31,18 @@ onMounted(async () => {
   </div>
   <section v-else :class="{grid:store.isAuth}">
     <div class="sidebar" v-if="store.isAuth">
-      <LayoutSidebar />
+      <LayoutSidebar/>
     </div>
     <div
-        v-if="store.isAuth"
         class="slot"
+        v-if="store.isAuth"
     >
       <slot/>
     </div>
-    <div v-else class="fullSlot">
+    <div
+        v-else
+        class="slotFull"
+    >
       <slot/>
     </div>
   </section>
@@ -49,10 +54,12 @@ onMounted(async () => {
   background-color: var(--color-grey-900);
   margin-left: 200px;
 }
-.fullSlot {
+
+.slotFull {
   width: 100%;
   background-color: var(--color-grey-900);
 }
+
 .loader {
   width: 100%;
   height: 100dvh;

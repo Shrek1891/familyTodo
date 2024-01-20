@@ -14,8 +14,8 @@ const isLoadingStorage = useIsLoadingStore();
 const authStore = useAuthStore();
 const router = useRouter();
 
-const login = async (event: Event) => {
-  event.preventDefault();
+const login = async (event?: Event) => {
+  event?.preventDefault();
   await account.createEmailSession(loginRef.value, passwordRef.value);
   const response = await account.get();
   if (response) {
@@ -70,9 +70,10 @@ const register = async () => {
           >Login
           </button>
           <button
-              type="submit"
+              type="button"
               @click="register"
-          >Register</button>
+          >Register
+          </button>
         </div>
 
       </form>
