@@ -2,10 +2,11 @@
 import {useDealSlideStore} from "~/store/slide";
 import Top from "~/components/Slideover/Top.vue";
 import Comments from "~/components/Slideover/Comments.vue";
-import {cardConfig, slideOverConfig} from "~/configs/config";
+import {cardConfig} from "~/configs/config";
 import {useMutation} from "@tanstack/vue-query";
 import {DB_ID} from "~/app.constants";
 import {useHomeQuery} from "~/hooks/useHomeQuery";
+import {ref, computed} from "vue";
 
 const {data, error, refetch} = useHomeQuery();
 const isOpen = ref(false)
@@ -16,7 +17,7 @@ const isLocalOpen = computed({
 })
 const cardId = store.card?.id || '';
 const {mutate, reset, isPending} = useMutation({
-  mutationKey: ['deals',  cardId],
+  mutationKey: ['deals', cardId],
   mutationFn: () => {
     return DB.deleteDocument(DB_ID, 'deals', store.card?.id || '')
   },
@@ -37,7 +38,20 @@ const closeCardHandler = () => {
   <div>
     <USlideover
         v-model="isLocalOpen"
-        :ui="slideOverConfig"
+        :ui="{
+    wrapper: 'bg-black-900',
+    overlay: 'bg-gray-200/10 ',
+    shadow: 'shadow-lg',
+    base: 'overflow-hidden rounded-2xl',
+    ring: '',
+    background: 'bg-blue-200',
+    header: {
+        background: 'bg-blue-200',
+    },
+    body: {
+        background: 'bg-blue-200',
+    },
+}"
     >
       <UCard
           class="slide-card"

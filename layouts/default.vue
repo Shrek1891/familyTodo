@@ -28,10 +28,16 @@ onMounted(async () => {
     <div class="loader">...loading</div>
   </div>
   <section v-else :class="{grid:store.isAuth}">
-    <div class="sidebar">
-      <LayoutSidebar v-if="store.isAuth"/>
+    <div class="sidebar" v-if="store.isAuth">
+      <LayoutSidebar />
     </div>
-    <div class="slot">
+    <div
+        v-if="store.isAuth"
+        class="slot"
+    >
+      <slot/>
+    </div>
+    <div v-else class="fullSlot">
       <slot/>
     </div>
   </section>
@@ -43,7 +49,10 @@ onMounted(async () => {
   background-color: var(--color-grey-900);
   margin-left: 200px;
 }
-
+.fullSlot {
+  width: 100%;
+  background-color: var(--color-grey-900);
+}
 .loader {
   width: 100%;
   height: 100dvh;

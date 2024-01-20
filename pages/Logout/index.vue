@@ -16,7 +16,6 @@ const router = useRouter();
 
 const login = async (event: Event) => {
   event.preventDefault();
-
   await account.createEmailSession(loginRef.value, passwordRef.value);
   const response = await account.get();
   if (response) {
@@ -28,10 +27,6 @@ const login = async (event: Event) => {
     isLoadingStorage.set(false);
     await router.push('/');
   }
-
-
-
-
 }
 
 const register = async () => {
